@@ -212,6 +212,7 @@
           }
         );
         if (response.ok) {
+          courseStudent_tableJSONData();
           await removeTd(i, table);
         }
       } catch (error) {
@@ -227,6 +228,7 @@
           }
         );
         if (response.ok) {
+          courseStudent_tableJSONData();
           removeTd(i, table);
         }
       } catch (error) {
@@ -239,7 +241,6 @@
       .addEventListener("submit", async function (event) {
         event.preventDefault();
         studentToSerach = document.querySelector("#searchStudent").value;
-
         if (studentToSerach == "") {
           student_tableJSONData();
         } else {
