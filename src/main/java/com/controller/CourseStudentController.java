@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,7 @@ import com.service.StudentService;
 import com.vo.CourseStudentVO;
 
 @CrossOrigin(origins = { "http://127.0.0.1:5500" })
+@RequestMapping("/api/v1")
 @RestController
 public class CourseStudentController {
 
@@ -31,22 +34,22 @@ public class CourseStudentController {
 	@Autowired
 	private StudentService ss;
 
-	@GetMapping("api/v1/coursestudent")
+	@GetMapping("/coursestudent")
 	public List<CourseStudentVO> getCoursesReviews() {
 		return cs.findCourseStudent();
 	}
 
-	@GetMapping("api/v1/coursestudent/{studentId}")
+	@GetMapping("/coursestudent/{studentId}")
 	public List<CourseStudentVO> findCourseStudentByStudentId(@PathVariable("studentId") Integer studentId) {
 		return cs.findCourseStudentByStudentId(studentId);
 	}
 
-	@GetMapping("api/v1/findAllStudent")
+	@GetMapping("/findAllStudent")
 	public List<Student> finAllStudents() {
 		return ss.findAll();
 	}
 
-	@GetMapping("api/v1/findAllCourses")
+	@GetMapping("/findAllCourses")
 	public List<Course> finAllCourses() {
 		return cs.findAll();
 	}
@@ -57,21 +60,21 @@ public class CourseStudentController {
 //		ss.save(student);
 //	}
 
-	@PostMapping(value = "api/v1/students", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/students", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void save(@RequestBody Student student) {
 		System.out.println(student);
 		ss.save(student);
 	}
 
-	@PostMapping(value = "api/v1/courses", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/courses", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void save(@RequestBody Course course) {
 		System.out.println(course);
 		cs.save(course);
 	}
 
-	@DeleteMapping("api/v1/students/{id}")
+	@DeleteMapping("/students/{id}")
 	public ResponseEntity<Void> deleteStudent(@PathVariable Integer id) {
 		ss.deleteById(id);
 		return ResponseEntity.noContent().build();
@@ -84,25 +87,25 @@ public class CourseStudentController {
 //		ss.addCourseToStudent(studentId, courseId);
 //		return ResponseEntity.ok().build();
 
-	@PostMapping(value = "api/v1/coursestudent/{studentId}/{courseId}")
+	@PostMapping(value = "/coursestudent/{studentId}/{courseId}")
 	public void addCourseToStudent(@PathVariable("studentId") Integer studentId,
 			@PathVariable("courseId") Integer courseId) {
 		ss.addCourseToStudent(studentId, courseId);
 	}
 
-	@DeleteMapping(value = "api/v1/removeCourseStudentRelation/{studentId}/{courseId}")
+	@DeleteMapping(value = "/removeCourseStudentRelation/{studentId}/{courseId}")
 	public void removeCourseStudentRelation(@PathVariable("studentId") Integer studentId,
 			@PathVariable("courseId") Integer courseId) {
 		ss.removeCourseStudentRelation(studentId, courseId);
 	}
 
-	@GetMapping("api/v1/findByLastnameOrFirstname/{studentNameOrLastName}")
+	@GetMapping("/findByLastnameOrFirstname/{studentNameOrLastName}")
 	public List<Student> findByLastnameOrFirstname(
 			@PathVariable("studentNameOrLastName") String studentNmaeOrLastName) {
 		return ss.findByLastNameOrFirstName(studentNmaeOrLastName);
 	}
 
-	@PostMapping(value = "api/v1/student/name/{studentId}/{newName}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/student/name/{studentId}/{newName}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveStudentName(@PathVariable("studentId") Integer studentId,
 			@PathVariable("newName") String studentName) {
@@ -121,7 +124,7 @@ public class CourseStudentController {
 		}
 	}
 
-	@PostMapping(value = "api/v1/student/lastname/{studentId}/{newNamLastName}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/student/lastname/{studentId}/{newNamLastName}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void saveStudentLastName(@PathVariable("studentId") Integer studentId,
 			@PathVariable("newNamLastName") String studentLastName) {
